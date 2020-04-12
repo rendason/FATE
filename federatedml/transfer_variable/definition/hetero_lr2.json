@@ -1,0 +1,94 @@
+{
+  "HeteroLRTransferVariable": {
+    "paillier_pubkey": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "batch_data_index": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "host_forward_dict": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "fore_gradient": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "host_loss_regular": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "loss_intermediate": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "converge_flag": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "batch_info": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "host_optim_gradient": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "host_gradient": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "host_prob": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "sqn_sample_index": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "forward_hess": {
+      "src": "guest",
+      "dst": [
+        "host"
+      ]
+    },
+    "host_sqn_forwards": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    },
+    "host_hess_vector": {
+      "src": "host",
+      "dst": [
+        "guest"
+      ]
+    }
+  }
+}

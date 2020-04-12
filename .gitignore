@@ -32,3 +32,6 @@ __pycache__
 /audit/
 .vscode/*
 /eggroll/
+venv/
+data/
+logs/
