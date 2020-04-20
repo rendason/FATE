@@ -19,15 +19,6 @@
 from federatedml.util import consts
 
 
-class Arbiter(object):
-    def _register_loss_sync(self, loss_transfer):
-        self.loss_transfer = loss_transfer
-
-    def sync_loss_info(self, suffix=tuple()):
-        loss = self.loss_transfer.get(idx=0, suffix=suffix)
-        return loss
-
-
 class Guest(object):
     def _register_loss_sync(self, host_loss_regular_transfer, loss_intermediate_transfer):
         self.host_loss_regular_transfer = host_loss_regular_transfer
@@ -43,9 +34,8 @@ class Guest(object):
 
 
 class Host(object):
-    def _register_loss_sync(self, host_loss_regular_transfer, loss_transfer, loss_intermediate_transfer):
+    def _register_loss_sync(self, host_loss_regular_transfer, loss_intermediate_transfer):
         self.host_loss_regular_transfer = host_loss_regular_transfer
-        self.loss_transfer = loss_transfer
         self.loss_intermediate_transfer = loss_intermediate_transfer
 
     def remote_loss_intermediate(self, loss_intermediate, suffix=tuple()):

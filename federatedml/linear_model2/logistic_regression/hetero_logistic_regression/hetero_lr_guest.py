@@ -170,7 +170,7 @@ class HeteroLRGuest(HeteroLRBase):
                 LOGGER.info(
                     "iter: {},  loss:{}, is_converged: {}".format(self.n_iter_, iter_loss, self.is_converged))
 
-            self.converge_procedure.sync_converge_info(suffix=(self.n_iter_,))
+            self.converge_procedure.sync_converge_info(self.is_converged, suffix=(self.n_iter_,))
             LOGGER.info("iter: {},  is_converged: {}".format(self.n_iter_, self.is_converged))
 
             validation_strategy.validate(self, self.n_iter_)

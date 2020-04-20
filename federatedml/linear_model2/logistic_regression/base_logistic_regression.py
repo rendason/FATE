@@ -46,7 +46,7 @@ class BaseLogisticRegression(BaseLinearModel):
 
     def _init_model(self, params):
         super()._init_model(params)
-        self.one_vs_rest_obj = one_vs_rest_factory(self, role=self.role, mode=self.mode, has_arbiter=True)
+        self.one_vs_rest_obj = one_vs_rest_factory(self, role=self.role, mode=self.mode, has_arbiter=False)
 
     def compute_wx(self, data_instances, coef_, intercept_=0):
         return data_instances.mapValues(lambda v: vec_dot(v.features, coef_) + intercept_)
@@ -109,7 +109,7 @@ class BaseLogisticRegression(BaseLinearModel):
         if need_one_vs_rest:
             one_vs_rest_result = result_obj.one_vs_rest_result
             self.one_vs_rest_obj = one_vs_rest_factory(classifier=self, role=self.role,
-                                                       mode=self.mode, has_arbiter=True)
+                                                       mode=self.mode, has_arbiter=False)
             self.one_vs_rest_obj.load_model(one_vs_rest_result)
             self.need_one_vs_rest = True
         else:

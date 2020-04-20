@@ -151,7 +151,7 @@ class Guest(HeteroGradientBase):
                                        encrypted_calculator, batch_index, offset=None):
         raise NotImplementedError("Function should not be called here")
 
-    def compute_gradient_procedure(self, data_instances, cipher_operators, model_weights, optimizer,
+    def compute_gradient_procedure(self, data_instances, encrypted_calculator, model_weights, optimizer,
                                    n_iter_, batch_index, offset=None):
         """
           Linear model gradient procedure
@@ -169,7 +169,7 @@ class Guest(HeteroGradientBase):
         self.host_forwards = self.get_host_forward(suffix=current_suffix)
 
         fore_gradient = self.compute_and_aggregate_forwards(data_instances, model_weights,
-                                                            cipher_operators, batch_index, offset)
+                                                            encrypted_calculator, batch_index, offset)
 
         self.remote_fore_gradient(fore_gradient, suffix=current_suffix)
 
@@ -193,7 +193,7 @@ class Guest(HeteroGradientBase):
         gradient = np.hstack((h for h in host_gradients))
         gradient = np.hstack((gradient, guest_gradient))
 
-        grad = np.array(cipher_operators[batch_index].decrypt_list(gradient))
+        grad = np.array(encrypted_calculator[batch_index].encrypter.decrypt_list(gradient))
 
         LOGGER.debug("In guest compute_gradient_procedure, before apply grad: {}, size_list: {}".format(
             grad, size_list

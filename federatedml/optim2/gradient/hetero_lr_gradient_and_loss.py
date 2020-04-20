@@ -56,7 +56,7 @@ class Guest(hetero_linear_model_gradient.Guest, loss_sync.Guest):
         fore_gradient = self.aggregated_forwards.join(data_instances, lambda wx, d: 0.25 * wx - 0.5 * d.label)
         return fore_gradient
 
-    def compute_loss(self, data_instances, cipher_operators, n_iter_, batch_index, loss_norm=None):
+    def compute_loss(self, data_instances, encrypted_calculator, n_iter_, batch_index, loss_norm=None):
         """
         Compute hetero-lr loss for:
         loss = (1/N)*∑(log2 - 1/2*ywx + 1/8*(wx)^2), where y is label, w is model weight and x is features
@@ -93,7 +93,7 @@ class Guest(hetero_linear_model_gradient.Guest, loss_sync.Guest):
                 loss += host_loss_regular[0]
             loss_list.append(loss)
         LOGGER.debug("In compute_loss, loss list are: {}".format(loss_list))
-        de_loss_list = cipher_operators[batch_index].decrypt_list(loss_list)
+        de_loss_list = encrypted_calculator[batch_index].encrypter.decrypt_list(loss_list)
         return de_loss_list
 
     def compute_forward_hess(self, data_instances, delta_s, host_forwards):
@@ -122,7 +122,6 @@ class Host(hetero_linear_model_gradient.Host, loss_sync.Host):
                                      transfer_variables.host_optim_gradient)
 
         self._register_loss_sync(transfer_variables.host_loss_regular,
-                                 transfer_variables.loss,
                                  transfer_variables.loss_intermediate)
 
     def compute_forwards(self, data_instances, model_weights):
